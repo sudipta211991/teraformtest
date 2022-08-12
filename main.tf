@@ -55,6 +55,7 @@ resource "aws_route_table_association" "RTA" {
 //to create security group
 resource "aws_security_group" "instanceSG" {
   name = "instanceSG"
+  vpc_id = "${aws_vpc.CustomVPC.id}"
   ingress {
     from_port = 3389
     to_port = 3389
@@ -77,12 +78,19 @@ resource "aws_security_group" "instanceSG" {
   }
 }
 
+resource "aws_network_interface" "this-nic" {
+  subnet_id = "${aws_subnet.public-subnet.id}"
+  security_groups = "${aws_security_group.instanceSG.id}"
+  tags = {
+    Name = "CustomNIC"
+  }
+}
+
 //create ebs volume
 resource "aws_ebs_volume" "rootvol" {
   availability_zone = "ap-south-1a"
   size = 30
   encrypted = false
-  
 }
 
 //create instance
@@ -90,6 +98,10 @@ resource "aws_instance" "TerraformInstance" {
     ami = "ami-08e7239dc2220a91a"
     instance_type = "t2.micro"
     key_name = "Windowsinstancekey"
+    network_interface {
+      network_interface_id = "${aws_network_interface.this-nic.id}"
+      device_index = 0
+    }
     subnet_id = "${aws_subnet.public-subnet.id}"
     vpc_security_group_ids = [ "${aws_security_group.instanceSG.id}" ]
     associate_public_ip_address = true
