@@ -80,7 +80,7 @@ resource "aws_security_group" "instanceSG" {
 
 resource "aws_network_interface" "this-nic" {
   subnet_id = "${aws_subnet.public-subnet.id}"
-  security_groups = "${aws_security_group.instanceSG.id}"
+  security_groups = ["${aws_security_group.instanceSG.id}"]
   tags = {
     Name = "CustomNIC"
   }
