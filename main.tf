@@ -82,9 +82,7 @@ resource "aws_ebs_volume" "rootvol" {
   availability_zone = "ap-south-1a"
   size = 30
   encrypted = false
-  tags{
-    Name = "C drive"
-  }
+  
 }
 
 //create instance
@@ -93,7 +91,7 @@ resource "aws_instance" "TerraformInstance" {
     instance_type = "t2.micro"
     key_name = "Windowsinstancekey"
     subnet_id = "${aws_subnet.public-subnet.id}"
-    vpc_security_group_ids = "${aws_security_group.instanceSG.id}"
+    security_groups = "${aws_security_group.instanceSG.id}"
     
 }
 
