@@ -91,7 +91,10 @@ resource "aws_instance" "TerraformInstance" {
     instance_type = "t2.micro"
     key_name = "Windowsinstancekey"
     subnet_id = "${aws_subnet.public-subnet.id}"
-    vpc_security_group_ids = [ aws_security_group.instanceSG.id ]
+    vpc_security_group_ids = [ "${aws_security_group.instanceSG.id}" ]
+    tags = {
+      Name = "Terraform-Instance"
+    }
     
 }
 
