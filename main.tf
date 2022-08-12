@@ -102,8 +102,6 @@ resource "aws_instance" "TerraformInstance" {
       network_interface_id = "${aws_network_interface.this-nic.id}"
       device_index = 0
     }
-    subnet_id = "${aws_subnet.public-subnet.id}"
-    vpc_security_group_ids = [ "${aws_security_group.instanceSG.id}" ]
     tags = {
       Name = "Terraform-Instance"
     }
