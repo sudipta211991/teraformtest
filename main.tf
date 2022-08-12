@@ -104,7 +104,6 @@ resource "aws_instance" "TerraformInstance" {
     }
     subnet_id = "${aws_subnet.public-subnet.id}"
     vpc_security_group_ids = [ "${aws_security_group.instanceSG.id}" ]
-    associate_public_ip_address = true
     tags = {
       Name = "Terraform-Instance"
     }
