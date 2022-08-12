@@ -53,7 +53,7 @@ resource "aws_route_table_association" "RTA" {
 }
 
 //to create security group
-resource "aws_security_group" "instsnceSG" {
+resource "aws_security_group" "instanceSG" {
   name = "instanceSG"
   ingress {
     from_port = 3389
